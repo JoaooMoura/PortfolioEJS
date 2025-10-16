@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<section class="page-title">
+    <h1>Dashboard do Portfólio</h1>
+    <p>Estatísticas gerais sobre minha jornada acadêmica.</p>
+</section>
+
+<section class="dashboard-stats">
+    <div class="stat-card">
+        <h3>Total de Projetos</h3>
+        <p><%= stats.totalProjetos %></p>
+    </div>
+    <div class="stat-card">
+        <h3>Total de Disciplinas</h3>
+        <p><%= stats.totalDisciplinas %></p>
+    </div>
+    <div class="stat-card">
+        <h3>Tecnologias</h3>
+        <ul>
+            <% stats.tecnologias.forEach(tech => { %>
+                <li><%= tech %></li>
+            <% }) %>
+        </ul>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

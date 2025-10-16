@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<section class="page-title">
+    <h1>Adicionar Novo Projeto</h1>
+</section>
+
+<section class="form-container">
+    <form action="/projetos" method="POST">
+        <div class="form-group">
+            <label for="title">Título</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">URL da Imagem</label>
+            <input type="text" id="imageUrl" name="imageUrl" required>
+        </div>
+        <div class="form-group">
+            <label for="link">Link do Projeto</label>
+            <input type="text" id="link" name="link" required>
+        </div>
+        <button type="submit">Adicionar Projeto</button>
+    </form>
+</section>
+
+<%- include('../partials/footer') %>

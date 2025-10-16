@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+
+<section class="page-title">
+    <h1>Contato</h1>
+    <p>Entre em contato comigo através dos canais abaixo.</p>
+</section>
+
+<section class="contact-section">
+    <ul>
+        <li><strong>E-mail:</strong> <%= contato.email %></li>
+        <li><strong>Telefone:</strong> <%= contato.telefone %></li>
+        <li><strong>GitHub:</strong> <a href="<%= contato.github %>" target="_blank"><%= contato.github %></a></li>
+    </ul>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<section class="page-title">
+    <h1>Minhas Disciplinas</h1>
+    <p>Algumas das disciplinas cursadas na minha jornada acadêmica.</p>
+</section>
+
+<section class="add-project-section">
+    <a href="/disciplinas/cadastro" class="btn-add">Adicionar Nova Disciplina</a>
+</section>
+<section class="list-section">
+    <ul>
+        <% disciplinas.forEach(disciplina => { %>
+            <li><%= disciplina %></li>
+        <% }) %>
+    </ul>
+</section>
+
+<%- include('../partials/footer') %>

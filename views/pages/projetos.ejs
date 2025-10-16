@@ -1,26 +1,26 @@
 <%- include('../partials/header') %>
 
 <section class="page-title">
-    <h1>
-        Todos os Meus Projetos
-    </h1>
+    <h1>Todos os Meus Projetos</h1>
 </section>
 
+<section class="add-project-section">
+    <a href="/projetos/cadastro" class="btn-add">Adicionar Novo Projeto</a>
+</section>
 <section class="projects-grid">
     <div class="projects-container">
-        <% projects.forEach(project => {
-            %>
-                <div class="project-card">
-                    <img src="<%= project.imageUrl %>" alt="<%= project.title">
+        <% projects.forEach(project => { %>
+           <div class="project-card">
+                    <img src="<%= project.imageUrl %>" alt="<%= project.title %>">
                     <h3>
-                        <%= project.title %>
+                        <%- project.title %>
                     </h3>
                     <p>
-                        <%= project.description %>
+                        <%- project.description %>
                     </p>
                     <a href="<%= project.link %> "target="_blank"> Ver Projeto </a>
                 </div>
-                <% }) %>
+        <% }) %>
     </div>
 </section>
 

@@ -1,67 +1,157 @@
-body{
+
+html {
+    height: 100%;
+}
+header {
+    position: relative;
+}
+
+header::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 0.1rem; 
+    background-image: linear-gradient(to right, #333, #888); 
+    bottom: 0;
+    left: 0;
+}
+body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     background-color: #f4f4f4;
     color: #333;
+    min-height: 100%; 
+    display: flex;
+    flex-direction: column; 
 }
 
-.container{
+main {
+    flex-grow: 1;
+}
+
+
+.container {
     max-width: 960px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.navbar{
+.navbar {
     background-color: #333;
     color: white;
     padding: 1rem;
 }
-.navbar .container{
+
+.navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .navbar a {
     color: white;
     text-decoration: none;
 }
-.brand{
+
+.brand {
     font-weight: bold;
     font-size: 1.5rem;
 }
+
 .nav-links {
     list-style: none;
     display: flex;
     gap: 20px;
 }
 
-.projects-grid h2{
+.projects-grid h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-.projects-container{
-    display: flex;
+
+.projects-container {
+    display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
-.projects-card{
+
+.project-card {
     background-color: white;
-    border: 1px;
+    border: 1px solid #ddd; 
     border-radius: 5px;
     padding: 20px;
     text-align: center;
 }
-.projects-card img{
+
+.project-card img {
     max-width: 100%;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-.footer{
+.footer {
     text-align: center;
     padding: 20px;
-    margin-top: 40px;
+    margin-top: 40px; 
     background-color: #333;
     color: white;
 }
 
+/* Estilo para o botão de adicionar projeto */
+.add-project-section {
+    text-align: center; /* Centraliza o botão */
+    margin: 20px 0;
+}
+
+.btn-add {
+    display: inline-block;
+    background-color: #28a745; /* Um verde bonito */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background-color: #218838; /* Um verde um pouco mais escuro */
+}
+
+/* Estilos para os formulários que criamos (BÔNUS) */
+.form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.form-container button:hover {
+    background-color: #555;
+}
