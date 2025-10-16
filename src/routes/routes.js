@@ -4,6 +4,10 @@ const portfolioController = require('../controllers/portfolioController');
 
 router.get('/projetos/cadastro', portfolioController.getFormularioNovoProjeto);
 router.get('/disciplinas/cadastro', portfolioController.getFormularioNovaDisc);
+router.get('/projetos/excluir/:id', portfolioController.excluirProjeto);
+router.get('/projetos/editar/:id', portfolioController.getFormularioEditarProjeto);
+router.get('/disciplinas/excluir/:index', portfolioController.excluirDisciplina);
+router.get('/disciplinas/editar/:index', portfolioController.getFormularioEditarDisciplina);
 router.get('/', portfolioController.getHomePage);
 router.get('/sobre', portfolioController.getSobrePage);
 router.get('/projetos', portfolioController.getProjetosPage);
@@ -11,4 +15,7 @@ router.get('/disciplinas', portfolioController.getDisciplinasPage);
 router.get('/contato', portfolioController.getContatoPage);
 router.get('/dashboard', portfolioController.getDashboardPage);
 router.post('/projetos', portfolioController.addNovoProjeto);
+router.post('/projetos/editar/:id', portfolioController.salvarProjetoEditado);
+router.post('/disciplinas', portfolioController.addNovaDisc);
+router.post('/disciplinas/editar/:index', portfolioController.salvarDisciplinaEditada);
 module.exports = router;

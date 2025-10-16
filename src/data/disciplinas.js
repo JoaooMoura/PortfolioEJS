@@ -1,5 +1,4 @@
-const disciplinas = [
-    "Técnicas de Programação",
+module.exports = [
     "Engenharia de Software",
     "Estrutura de Dados",
     "Banco de Dados Relacional",
@@ -7,5 +6,3 @@ const disciplinas = [
     "Matemática para Computação",
     "Desenvolvimento Web II"
 ];
-
-module.exports = disciplinas;

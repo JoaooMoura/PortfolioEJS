@@ -10,8 +10,14 @@
 </section>
 <section class="list-section">
     <ul>
-        <% disciplinas.forEach(disciplina => { %>
-            <li><%= disciplina %></li>
+        <% disciplinas.forEach((disciplina, index) => { %>
+            <li>
+                <%= disciplina %>
+                <div class="action-buttons-simple">
+                    <a href="/disciplinas/editar/<%= index %>" class="btn-edit-simple">Editar</a>
+                    <a href="/disciplinas/excluir/<%= index %>" class="btn-delete-simple">Excluir</a>
+                </div>
+            </li>
         <% }) %>
     </ul>
 </section>
