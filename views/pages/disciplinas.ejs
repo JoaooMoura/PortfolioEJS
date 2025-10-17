@@ -2,24 +2,19 @@
 
 <section class="page-title">
     <h1>Minhas Disciplinas</h1>
-    <p>Algumas das disciplinas cursadas na minha jornada acadêmica.</p>
+    <p>Os pilares do meu conhecimento técnico e teórico.</p>
 </section>
 
 <section class="add-project-section">
-    <a href="/disciplinas/cadastro" class="btn-add">Adicionar Nova Disciplina</a>
+    <a href="/disciplinas/nova" class="btn-add">Adicionar Nova Disciplina</a>
 </section>
-<section class="list-section">
-    <ul>
-        <% disciplinas.forEach((disciplina, index) => { %>
-            <li>
-                <%= disciplina %>
-                <div class="action-buttons-simple">
-                    <a href="/disciplinas/editar/<%= index %>" class="btn-edit-simple">Editar</a>
-                    <a href="/disciplinas/excluir/<%= index %>" class="btn-delete-simple">Excluir</a>
-                </div>
-            </li>
-        <% }) %>
-    </ul>
-</section>
+
+<div class="disciplinas-grid">
+    <% disciplinas.forEach(disciplina => { %>
+        <div class="disciplina-card">
+            <%= disciplina %>
+        </div>
+    <% }) %>
+</div>
 
 <%- include('../partials/footer') %>
