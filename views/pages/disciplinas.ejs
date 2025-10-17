@@ -6,13 +6,20 @@
 </section>
 
 <section class="add-project-section">
-    <a href="/disciplinas/nova" class="btn-add">Adicionar Nova Disciplina</a>
+    <a href="/disciplinas/cadastro" class="btn-add">Adicionar Nova Disciplina</a>
 </section>
 
 <div class="disciplinas-grid">
-    <% disciplinas.forEach(disciplina => { %>
+    <% disciplinas.forEach((disciplina, index) => { %>
         <div class="disciplina-card">
-            <%= disciplina %>
+            
+            <span class="disciplina-nome"><%= disciplina %></span>
+
+            <div class="card-actions">
+                <a href="/disciplinas/editar/<%= index %>" class="btn-edit">Editar</a>
+                <a href="/disciplinas/excluir/<%= index %>" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir esta disciplina?');">Excluir</a>
+            </div>
+
         </div>
     <% }) %>
 </div>
