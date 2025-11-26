@@ -1,552 +1,209 @@
+
 html {
-  box-sizing: border-box;
-  height: 100%;
+    height: 100%;
 }
-
-*, *:before, *:after {
-  box-sizing: inherit;
+header {
+    position: relative;
+    background-color: transparent;
 }
-
+img {
+    height: 20px;
+}
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  background: radial-gradient(circle, purple, black);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: #f4f4f4;
-  min-height: 100%; 
-  display: flex;
-  flex-direction: column; 
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background: radial-gradient(circle, purple, black);
+    color: #f4f4f4;
+    min-height: 100%; 
+    display: flex;
+    flex-direction: column; 
 }
 
 main {
-  flex-grow: 1; 
+    flex-grow: 1;
 }
 
-ul {
-  padding-inline-start: 0;
-  margin: 0;
+
+.container {
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 10px 60px;
 }
 
+.navbar {
+    background-color: transparent;
+    color: white;
+    margin: 0;
+}
+/* Adicione este novo bloco ao seu CSS */
+.navigation-links {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Mantém o mesmo espaçamento que você já tinha */
+}
 .navbar .container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 10px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    
 }
 
-.nav-logo img {
-  height: 15px;
-  display: block;
+.navbar a {
+    color: white;
+    text-decoration: none;
 }
 
+.brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+ul{
+    padding-inline-start: 0px;
+}
 .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 20px;
 }
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 10px 0;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: #cccccc;
-}
-
-.nav-contact {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px 16px;
-  border: 1px solid white;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.nav-contact:hover {
-  background-color: white;
-  color: #333;
-}
-
-
-
-.hero-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 80vh;
-  padding: 0 60px;
-  gap: 40px;
-}
-
-.hero-text {
-  flex: 1;
-  max-width: 50%;
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.hero-text p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
-
-.hero-cta {
-  background-color: purple;
-  color: white;
-  padding: 15px 30px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.hero-cta:hover {
-  background-color: #a020f0;
-}
-
-.hero-visual {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-visual img {
-  max-width: 500px;
-  width: 100%;
-  height: 550px;
-  border-radius: 50%;
-  border: 3px solid purple;
-  box-shadow: 0 0 25px rgba(128, 0, 128, 0.6);
-}
-
-.projects-grid {
-  padding: 60px;
-  width: 100%;
+.ctt {
+    list-style: none;
 }
 
 .projects-grid h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 40px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .projects-container {
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
-
-
-
-.page-title {
-  text-align: center;
-  padding: 40px 20px;
-  margin-bottom: 20px;
-}
-
-.page-title h1 {
-  font-size: 2.8rem;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-
-.page-title h1::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 3px;
-  background-color: purple;
-  margin: 20px auto 0;
-}
-
-.page-title p {
-  font-size: 1.2rem;
-  color: #cccccc;
-  max-width: 600px;
-  margin: 0 auto;
-}
 .project-card {
-  position: relative;
-  min-height: 250px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  transition: transform 0.3s ease;
+    background-color: white;
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    color: #333;
+    padding: 20px;
+    text-align: center;
 }
 
-.project-card:hover {
-  transform: scale(1.03);
+.project-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
-.project-info {
-  padding: 20px;
-  color: white;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-  transition: opacity 0.3s ease;
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px; 
+    background-color: #333;
+    color: white;
 }
-
-.project-info h3 {
-  margin: 0;
-  font-size: 1.3rem;
-}
-
-.project-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(15, 15, 15, 0.85);
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  color: white;
-}
-
-.project-card:hover .project-overlay {
-  opacity: 1;
-}
-.project-card:hover .project-info {
-  opacity: 0;
-}
-
-.project-overlay h3 {
-  margin-top: 0;
-}
-
-.project-overlay p {
-  margin-bottom: 20px;
-}
-
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.action-buttons a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.action-buttons a:hover {
-  transform: scale(1.05);
-}
-
-.btn-view { background-color: #007bff; }
-.btn-edit { background-color: #ffc107; color: black; }
-.btn-delete { background-color: #dc3545; }
-
-
 
 .add-project-section {
-  text-align: center; 
-  margin: 40px 0;
+    text-align: center; 
+    margin: 20px 0;
 }
 
 .btn-add {
-  display: inline-block;
-  background-color: purple;
-  color: white;
-  padding: 12px 24px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+    display: inline-block;
+    background-color: #28a745; 
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 .btn-add:hover {
-  background-color: #a020f0;
+    background-color: #218838; 
 }
 
 .form-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: white;
-  color: #333;
-  border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
 }
-
 .form-group {
-  margin-bottom: 20px;
+    margin-bottom: 15px;
 }
-
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
 }
-
 .form-group input,
 .form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
 }
-
 .form-container button {
-  width: 100%;
-  padding: 12px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
-
 .form-container button:hover {
-  background-color: #555;
+    background-color: #555;
 }
 
-
-
-.footer {
-  text-align: center;
-  padding: 20px;
-  margin-top: auto;
-  background-color: transparent;
-  color: white;
+.btn-delete {
+    display: block; 
+    margin-top: 10px;
+    background-color: #dc3545; 
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
-
-.about-section {
-  display: flex;
-  align-items: flex-start;
-  gap: 50px;
-  min-height: 70vh;
-  padding: 40px 60px;
-  max-width: 1400px;
-  margin: 0 auto;
+.btn-delete:hover {
+    background-color: #c82333; 
 }
 
-.about-text {
-  flex: 1.5;
+.btn-delete-simple {
+    margin-left: 15px;
+    color: #dc3545;
+    text-decoration: none;
+    font-size: 0.9em;
 }
 
-.about-text h1 {
-  font-size: 3rem;
-  margin-top: 0;
-  margin-bottom: 20px;
+.btn-delete-simple:hover {
+    text-decoration: underline;
+}
+/* Container para os botões de ação */
+.action-buttons {
+    display: flex;
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 15px;
 }
 
-.about-text p {
-  font-size: 1.1rem;
-  line-height: 1.7;
+.action-buttons a {
+    flex-grow: 1; /* Faz os botões dividirem o espaço */
+    text-align: center;
+    padding: 8px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.about-formations {
-  flex: 1;
-  margin-top: 10px;
+.btn-edit {
+    background-color: #007bff; /* Azul */
 }
 
-.about-formations h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  border-left: 3px solid purple;
-  padding-left: 15px;
-}
-
-.about-formations ul {
-  list-style: none;
-  padding: 0;
-}
-
-.about-formations li {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-
-.disciplinas-grid {
-  display: grid;
- 
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 60px 60px 60px;
-}
-
-.disciplina-card {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 30px;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  
- 
-  border-left: 4px solid transparent; 
-  
- 
-  transition: all 0.3s ease;
-}
-
-.disciplina-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-left-color: purple;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-
-.dashboard-grid {
-  display: grid;
- 
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 60px 60px 60px;
-}
-
-.stat-card {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 30px;
-  text-align: center;
-  transition: all 0.3s ease;
-  border-bottom: 4px solid transparent;
-}
-
-.stat-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-bottom-color: purple;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.stat-card-icon svg {
-  width: 48px;
-  height: 48px;
-  stroke: rgb(38, 10, 38);
-  margin-bottom: 15px;
-}
-
-.stat-card-number {
-  display: block;
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: white;
-}
-
-.stat-card-title {
-  margin: 10px 0 0 0;
-  font-size: 1.2rem;
-  color: #cccccc;
-}
-
-
-.tech-card {
- 
-  grid-column: 1 / -1; 
-}
-
-.tech-tags {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.tech-tags span {
-  background-color: rgba(128, 0, 128, 0.3);
-  border: 1px solid purple;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 60px 60px 60px;
-}
-
-.contact-card {
-  text-decoration: none;
-  color: inherit;
-  
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 40px 25px;
-  text-align: center;
-  transition: all 0.3s ease;
-  border-top: 4px solid transparent;
-}
-
-.contact-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-top-color: purple;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.contact-card-icon svg {
-  width: 48px;
-  height: 48px;
-  stroke: rgb(42, 3, 42);
-  stroke-width: 2;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  margin-bottom: 20px;
-}
-
-.contact-card h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.5rem;
-  color: white;
-}
-
-.contact-card p {
-  margin: 0;
-  font-size: 1rem;
-  color: #cccccc;
-}

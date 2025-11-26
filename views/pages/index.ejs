@@ -1,42 +1,23 @@
 <%- include('../partials/header') %>
 
-<section class="hero-section">
-    <div class="hero-text">
-        <h1>Bem-vindo(a) ao meu Portfólio</h1>
-        <p>
-            Explore meus projetos e minha jornada acadêmica no mundo do desenvolvimento.
-            Aqui você encontrará as tecnologias que utilizo e os desafios que superei.
-        </p>
-        <a href="#projetos-destaque" class="hero-cta">Ver Projetos</a>
-    </div>
-    <div class="hero-visual">
-        <img src="/image/eu.jpeg" alt="Sua Foto Profissional">
-
-        </div>
+<section class="hero">
+    <h1>Bem-vindo(a) ao portfólio de <%= estudante.nomeAbreviado %>!</h1>
+    <p>Um lugar para apresentar minha jornada acadêmica e projetos.</p>
 </section>
 
-<section id="projetos-destaque" class="projects-grid">
+<section class="projects-grid">
     <h2>Projetos em Destaque</h2>
     <div class="projects-container">
         <% projects.forEach(project => { %>
-            <div class="project-card" style="background-image: url('<%= project.imageUrl %>');">
-
-                <div class="project-info">
-                    <h3><%= project.title %></h3>
-                </div>
-
-                <div class="project-overlay">
-                    <h3><%= project.title %></h3>
-                    <p><%= project.description %></p>
-                    <div class="action-buttons">
-                        <a href="<%= project.link %>" target="_blank" class="btn-view">Ver Projeto</a>
-                        <a href="/projetos/editar/<%= project.id %>" class="btn-edit">Editar</a>
-                        <a href="/projetos/excluir/<%= project.id %>" class="btn-delete">Excluir</a>
-                    </div>
-                </div>
-
+            <div class="project-card">
+                <img src="<%= project.imageUrl %>" alt="<%= project.title %>">
+                <h3><%= project.title %></h3>
+                <p><%= project.description %></p>
+                <a href="<%= project.link %>" target="_blank">Ver Projeto</a>
             </div>
         <% }) %>
     </div>
 </section>
+
 <%- include('../partials/footer') %>
+
