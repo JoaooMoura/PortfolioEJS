@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Portfolio | <%= title %></title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title><%= title %> - Portfólio</title>
+    <link rel="stylesheet" href="/style/style.css">
 </head>
-
 <body>
-    <%- include('navbar')%>
-    <main class="container">
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-logo">
+                <img src="/uploads/projetos/LOGO.png" alt="Logo">
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/sobre">Sobre</a></li>
+                <li><a href="/projetos">Projetos</a></li>
+                <li><a href="/disciplinas">Disciplinas</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+            </ul>
+
+            <a href="/contato" class="nav-contact">Contato</a>
+        </div>
+    </nav>
+    <main>

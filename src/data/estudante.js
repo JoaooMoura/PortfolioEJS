@@ -1,14 +1,9 @@
-// Localização: src/data/estudante.js
-
 const dadosEstudante = {
     nomeCompleto: "João Vitor de Moura",
     nomeAbreviado: "João Moura",
     curso: "Desenvolvimento de Software Multiplataforma",
     instituicao: "Fatec - Faculdade de Tecnologia de São José dos Campos",
     anoIngresso: 2025,
-    
-    // Usamos um array aqui para cada linha ser um item de lista no HTML.
-    // Fica mais organizado e fácil de estilizar.
     formacao: [
         "Formação: Desenvolvimento de Sistemas (Fev 2022 - Dez 2024)",
         "Instituição: ETEC Profª Ilza Nascimento Pintus",

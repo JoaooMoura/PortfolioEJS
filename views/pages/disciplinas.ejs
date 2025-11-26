@@ -5,14 +5,22 @@
     <p>Os pilares do meu conhecimento técnico e teórico.</p>
 </section>
 
-<section class="add-project-section">
-    <a href="/disciplinas/nova" class="btn-add">Adicionar Nova Disciplina</a>
-</section>
+<div class="add-project-section">
+    <a href="/disciplinas/cadastro" class="btn-add">+ Adicionar Nova Disciplina</a>
+</div>
 
 <div class="disciplinas-grid">
     <% disciplinas.forEach(disciplina => { %>
-        <div class="disciplina-card">
-            <%= disciplina %>
+        <div class="disciplina-card" style="position: relative; padding-bottom: 70px;">
+            <div style="margin-bottom: 15px;">
+                <%= disciplina.nome %>
+            </div>
+            <div class="action-buttons" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: calc(100% - 40px);">
+                <a href="/disciplinas/editar/<%= disciplina.id %>" class="btn-edit" style="flex: 1; text-align: center; display: inline-block;">Editar</a>
+                <form action="/disciplinas/deletar/<%= disciplina.id %>" method="POST" style="display: inline; flex: 1; margin: 0;">
+                    <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir esta disciplina?')" style="width: 100%;">Excluir</button>
+                </form>
+            </div>
         </div>
     <% }) %>
 </div>

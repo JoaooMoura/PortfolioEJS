@@ -1,24 +1,34 @@
 <%- include('../partials/header') %>
 
 <section class="about-section">
-
     <div class="about-text">
         <h1>Sobre Mim</h1>
-        
-        <% estudante.descricao.forEach(paragrafo => { %>
-            <p><%= paragrafo %></p>
-        <% }) %>
+        <p>
+            Me chamo <%= informacao.nomeCompleto %>, sou estudante de <%= informacao.curso %> 
+            na <%= informacao.instituicao %>. Tenho experiência em desenvolvimento front-end e back-end, 
+            com foco em criar aplicações web e mobile utilizando tecnologias modernas.
+        </p>
+        <p>
+            Busco constantemente aprimorar minhas habilidades técnicas e participar de projetos 
+            desafiadores que me permitam crescer como desenvolvedor. Tenho paixão por tecnologia 
+            e inovação, sempre buscando soluções criativas para problemas complexos.
+        </p>
     </div>
-
     <div class="about-formations">
         <h2>Formação Acadêmica</h2>
         <ul>
-            <% estudante.formacao.forEach(item => { %>
-                <li><%= item %></li>
-            <% }) %>
+            <li>
+                <strong><%= informacao.curso %></strong><br>
+                <%= informacao.instituicao %><br>
+                Ingresso: <%= informacao.anoIngresso %>
+            </li>
+            <li>
+                <strong>Desenvolvimento de Sistemas</strong><br>
+                ETEC Profª Ilza Nascimento Pintus<br>
+                Fev 2022 - Dez 2024
+            </li>
         </ul>
     </div>
-
 </section>
 
 <%- include('../partials/footer') %>

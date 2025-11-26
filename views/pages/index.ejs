@@ -2,41 +2,40 @@
 
 <section class="hero-section">
     <div class="hero-text">
-        <h1>Bem-vindo(a) ao meu Portfólio</h1>
+        <h1>Olá, meu nome é <br><strong><%= informacao.nomeCompleto %></strong></h1>
         <p>
-            Explore meus projetos e minha jornada acadêmica no mundo do desenvolvimento.
-            Aqui você encontrará as tecnologias que utilizo e os desafios que superei.
+            Estudando <strong><%= informacao.curso %></strong> na 
+            <strong><%= informacao.instituicao %></strong> desde <%= informacao.anoIngresso %>.
         </p>
-        <a href="#projetos-destaque" class="hero-cta">Ver Projetos</a>
+        <a href="/projetos" class="hero-cta">Ver Meus Projetos</a>
     </div>
     <div class="hero-visual">
-        <img src="/image/eu.jpeg" alt="Sua Foto Profissional">
-
-        </div>
+        <img src="/uploads/projetos/eu.jpeg" alt="<%= informacao.nomeCompleto %>">
+    </div>
 </section>
 
-<section id="projetos-destaque" class="projects-grid">
+<% if (projetos && projetos.length > 0) { %>
+<section class="projects-grid">
     <h2>Projetos em Destaque</h2>
     <div class="projects-container">
-        <% projects.forEach(project => { %>
-            <div class="project-card" style="background-image: url('<%= project.imageUrl %>');">
-
+        <% projetos.forEach(projeto => { %>
+            <div class="project-card" style="background-image: url('<%= projeto.foto %>');">
                 <div class="project-info">
-                    <h3><%= project.title %></h3>
+                    <h3><%= projeto.titulo %></h3>
                 </div>
-
                 <div class="project-overlay">
-                    <h3><%= project.title %></h3>
-                    <p><%= project.description %></p>
+                    <h3><%= projeto.titulo %></h3>
+                    <p><%= projeto.descricao.substring(0, 100) %>...</p>
                     <div class="action-buttons">
-                        <a href="<%= project.link %>" target="_blank" class="btn-view">Ver Projeto</a>
-                        <a href="/projetos/editar/<%= project.id %>" class="btn-edit">Editar</a>
-                        <a href="/projetos/excluir/<%= project.id %>" class="btn-delete">Excluir</a>
+                        <% if (projeto.link) { %>
+                            <a href="<%= projeto.link %>" target="_blank" class="btn-view">Ver Projeto</a>
+                        <% } %>
                     </div>
                 </div>
-
             </div>
         <% }) %>
     </div>
 </section>
+<% } %>
+
 <%- include('../partials/footer') %>
