@@ -1,13 +1,24 @@
 <%- include('../partials/header') %>
 
 <section class="about-section">
-    <h1>Sobre Mim</h1>
-    <h2><%= estudante.nomeCompleto %></h2>
-    <ul>
-        <li><strong>Curso:</strong> <%= estudante.curso %></li>
-        <li><strong>Instituição:</strong> <%= estudante.instituicao %></li>
-        <li><strong>Ano de Ingresso:</strong> <%= estudante.anoIngresso %></li>
-    </ul>
+
+    <div class="about-text">
+        <h1>Sobre Mim</h1>
+        
+        <% estudante.descricao.forEach(paragrafo => { %>
+            <p><%= paragrafo %></p>
+        <% }) %>
+    </div>
+
+    <div class="about-formations">
+        <h2>Formação Acadêmica</h2>
+        <ul>
+            <% estudante.formacao.forEach(item => { %>
+                <li><%= item %></li>
+            <% }) %>
+        </ul>
+    </div>
+
 </section>
 
 <%- include('../partials/footer') %>
