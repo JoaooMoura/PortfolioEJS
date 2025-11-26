@@ -1,44 +1,20 @@
 <%- include('../partials/header') %>
 
-<div class="disciplinas-container">
-  <h1>Minhas Disciplinas</h1>
+<section class="page-title">
+    <h1>Minhas Disciplinas</h1>
+    <p>Os pilares do meu conhecimento técnico e teórico.</p>
+</section>
 
-  <% if (disciplinas && disciplinas.length > 0) { %>
-    <table class="disciplinas-table">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Código</th>
-          <th>Semestre</th>
-          <th>Status</th>
-          <th>Nota</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% disciplinas.forEach(disciplina => { %>
-          <tr class="status-<%= disciplina.status %>">
-            <td><%= disciplina.nome %></td>
-            <td><%= disciplina.codigo %></td>
-            <td><%= disciplina.semestre %></td>
-            <td>
-              <span class="badge badge-<%= disciplina.status %>">
-                <%= disciplina.status %>
-              </span>
-            </td>
-            <td>
-              <% if (disciplina.nota) { %>
-                <%= disciplina.nota %>
-              <% } else { %>
-                <span class="text-muted">-</span>
-              <% } %>
-            </td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>Nenhuma disciplina cadastrada.</p>
-  <% } %>
+<section class="add-project-section">
+    <a href="/disciplinas/nova" class="btn-add">Adicionar Nova Disciplina</a>
+</section>
+
+<div class="disciplinas-grid">
+    <% disciplinas.forEach(disciplina => { %>
+        <div class="disciplina-card">
+            <%= disciplina %>
+        </div>
+    <% }) %>
 </div>
 
 <%- include('../partials/footer') %>

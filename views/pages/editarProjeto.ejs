@@ -1,65 +1,29 @@
 <%- include('../partials/header') %>
 
-<div class="form-container">
-  <h1>Editar Projeto</h1>
+<section class="page-title">
+    <h1>Editar Projeto</h1>
+</section>
 
-  <form action="/projetos/editar/<%= projeto.id %>" method="POST" enctype="multipart/form-data" class="projeto-form">
-    <div class="form-group">
-      <label for="titulo">Título do Projeto *</label>
-      <input type="text" id="titulo" name="titulo" value="<%= projeto.titulo %>" required maxlength="150">
-    </div>
-
-    <div class="form-group">
-      <label for="descricao">Descrição *</label>
-      <textarea id="descricao" name="descricao" rows="5" required><%= projeto.descricao %></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="link">Link do Projeto (GitHub)</label>
-      <input type="url" id="link" name="link" value="<%= projeto.link || '' %>" placeholder="https://github.com/seu-usuario/seu-projeto">
-    </div>
-
-    <div class="form-group">
-      <label for="tecnologias">Tecnologias Utilizadas (separadas por vírgula)</label>
-      <input type="text" id="tecnologias" name="tecnologias" value="<%= projeto.tecnologias || '' %>" placeholder="Node.js, Express, MySQL, React">
-    </div>
-
-    <div class="form-group">
-      <label for="status">Status do Projeto *</label>
-      <select id="status" name="status" required>
-        <option value="em andamento" <% if (projeto.status === 'em andamento') { %>selected<% } %>>Em Andamento</option>
-        <option value="concluido" <% if (projeto.status === 'concluido') { %>selected<% } %>>Concluído</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="dataInicio">Data de Início</label>
-      <input type="date" id="dataInicio" name="dataInicio" value="<%= projeto.dataInicio ? projeto.dataInicio.toISOString().split('T')[0] : '' %>">
-    </div>
-
-    <div class="form-group">
-      <label>Foto Atual</label>
-      <% if (projeto.foto) { %>
-        <div class="foto-atual">
-          <img src="<%= projeto.foto %>" alt="<%= projeto.titulo %>">
-          <p>Foto atual do projeto</p>
+<section class="form-container">
+    <form action="/projetos/editar/<%= projeto.id %>" method="POST">
+        <div class="form-group">
+            <label for="title">Título do Projeto</label>
+            <input type="text" id="title" name="title" value="<%= projeto.title %>" required>
         </div>
-      <% } else { %>
-        <p class="text-muted">Nenhuma foto associada</p>
-      <% } %>
-    </div>
-
-    <div class="form-group">
-      <label for="foto">Alterar Foto do Projeto</label>
-      <input type="file" id="foto" name="foto" accept="image/*">
-      <small>📁 Deixe em branco para manter a foto atual | Máximo 5MB | Formatos: JPG, PNG, GIF, WebP</small>
-    </div>
-
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-      <a href="/projetos" class="btn btn-secondary">Cancelar</a>
-    </div>
-  </form>
-</div>
+        <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" rows="4" required><%= projeto.description %></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">URL da Imagem</label>
+            <input type="text" id="imageUrl" name="imageUrl" value="<%= projeto.imageUrl %>" required>
+        </div>
+        <div class="form-group">
+            <label for="link">Link do Projeto</label>
+            <input type="text" id="link" name="link" value="<%= projeto.link %>" required>
+        </div>
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</section>
 
 <%- include('../partials/footer') %>

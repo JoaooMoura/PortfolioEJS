@@ -1,32 +1,40 @@
 <%- include('../partials/header') %>
 
-<div class="dashboard-container">
-  <h1>Dashboard</h1>
+<section class="page-title">
+    <h1>Dashboard Acadêmico</h1>
+    <p>Uma visão geral da minha jornada e das tecnologias que utilizo.</p>
+</section>
 
-  <div class="dashboard-stats">
+<div class="dashboard-grid">
+
     <div class="stat-card">
-      <h3>Total de Disciplinas</h3>
-      <p class="stat-number"><%= totalDisciplinas %></p>
+        <div class="stat-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <span class="stat-card-number"><%= stats.totalProjetos %></span>
+        <h3 class="stat-card-title">Projetos Concluídos</h3>
     </div>
 
     <div class="stat-card">
-      <h3>Projetos Concluídos</h3>
-      <p class="stat-number"><%= projetosConcluidos %></p>
+        <div class="stat-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </div>
+        <span class="stat-card-number"><%= stats.totalDisciplinas %></span>
+        <h3 class="stat-card-title">Disciplinas Cursadas</h3>
     </div>
 
-    <div class="stat-card">
-      <h3>Tecnologias Top</h3>
-      <div class="tech-list">
-        <% if (topTechs && topTechs.length > 0) { %>
-          <% topTechs.forEach(tech => { %>
-            <span class="tech-badge"><%= tech.tech %> (<%= tech.count %>)</span>
-          <% }); %>
-        <% } else { %>
-          <p>Nenhuma tecnologia registrada</p>
-        <% } %>
-      </div>
+    <div class="stat-card tech-card">
+        <div class="stat-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        </div>
+        <h3 class="stat-card-title">Principais Tecnologias</h3>
+        <div class="tech-tags">
+            <% stats.tecnologias.forEach(tech => { %>
+                <span><%= tech %></span>
+            <% }) %>
+        </div>
     </div>
-  </div>
+
 </div>
 
 <%- include('../partials/footer') %>

@@ -4,26 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %> - Portfólio
-    </title>
-    <link rel="stylesheet" href="/public/style/style.css">
-
+    <title>Meu Portfolio | <%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo">Portfólio</a>
-            <ul class="nav-menu">
-                <li><a href="/">Início</a></li>
-                <li><a href="/sobre">Sobre</a></li>
-                <li><a href="/disciplinas">Disciplinas</a></li>
-                <li><a href="/projetos">Projetos</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/contato">Contato</a></li>
-            </ul>
-        </div>
-    </nav>
-
+    <%- include('navbar')%>
     <main class="container">

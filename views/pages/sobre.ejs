@@ -1,35 +1,24 @@
 <%- include('../partials/header') %>
 
-<div class="sobre-container">
-  <h1>Sobre Mim</h1>
-  <% if (informacao) { %>
-    <div class="info-grid">
-      <div class="info-item">
-        <label>Nome Completo:</label>
-        <p><%= informacao.nomeCompleto %></p>
-      </div>
-      <div class="info-item">
-        <label>Curso:</label>
-        <p><%= informacao.curso %></p>
-      </div>
-      <div class="info-item">
-        <label>Instituição:</label>
-        <p><%= informacao.instituicao %></p>
-      </div>
-      <div class="info-item">
-        <label>Ano de Ingresso:</label>
-        <p><%= informacao.anoIngresso %></p>
-      </div>
-      <div class="info-item">
-        <label>Email:</label>
-        <p><a href="mailto:<%= informacao.email %>"><%= informacao.email %></a></p>
-      </div>
-      <div class="info-item">
-        <label>Telefone:</label>
-        <p><%= informacao.telefone %></p>
-      </div>
+<section class="about-section">
+
+    <div class="about-text">
+        <h1>Sobre Mim</h1>
+        
+        <% estudante.descricao.forEach(paragrafo => { %>
+            <p><%= paragrafo %></p>
+        <% }) %>
     </div>
-  <% } %>
-</div>
+
+    <div class="about-formations">
+        <h2>Formação Acadêmica</h2>
+        <ul>
+            <% estudante.formacao.forEach(item => { %>
+                <li><%= item %></li>
+            <% }) %>
+        </ul>
+    </div>
+
+</section>
 
 <%- include('../partials/footer') %>

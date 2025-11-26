@@ -1,170 +1,119 @@
-const { Informacao, Disciplina, Projeto } = require('../models');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
-exports.index = async (req, res) => {
-  try {
-    const informacao = await Informacao.findOne();
-    const projetos = await Projeto.findAll({ limit: 3, order: [['createdAt', 'DESC']] });
-    res.render('pages/index', { informacao, projetos, title: 'Início' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
-};
+const projects = require('../data/projects');
+const estudante = require('../data/estudante');
+const disciplinas = require('../data/disciplinas');
+const contato = require('../data/contato');
 
-exports.sobre = async (req, res) => {
-  try {
-    const informacao = await Informacao.findOne();
-    res.render('pages/sobre', { informacao, title: 'Sobre Mim' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
-};
-
-exports.disciplinas = async (req, res) => {
-  try {
-    const disciplinas = await Disciplina.findAll({ order: [['semestre', 'DESC']] });
-    res.render('pages/disciplinas', { disciplinas, title: 'Minhas Disciplinas' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
-};
-
-exports.projetos = async (req, res) => {
-  try {
-    const projetos = await Projeto.findAll({ order: [['createdAt', 'DESC']] });
-    res.render('pages/projetos', { projetos, title: 'Meus Projetos' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
-};
-
-exports.criarProjetoForm = async (req, res) => {
-  try {
-    res.render('pages/cadastroProjeto', { title: 'Cadastrar Projeto' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
-};
-
-exports.criarProjeto = async (req, res) => {
-  try {
-    const { titulo, descricao, link, tecnologias, status, dataInicio } = req.body;
-    let fotoPath = null;
-    if (req.file) {
-      fotoPath = `/uploads/projetos/${req.file.filename}`;
-    }
-    await Projeto.create({
-      titulo,
-      descricao,
-      link,
-      tecnologias,
-      status,
-      dataInicio: dataInicio || new Date(),
-      foto: fotoPath
+const getHomePage = (req, res) => {
+    res.render('pages/index', {
+        title: 'Home',
+        estudante: estudante, 
+        projects: projects.slice(0, 3) 
     });
-    res.redirect('/projetos');
-  } catch (error) {
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
-    }
-    res.status(500).render('error', { error: error.message });
-  }
 };
 
-exports.editarProjetoForm = async (req, res) => {
-  try {
-    const projeto = await Projeto.findByPk(req.params.id);
-    if (!projeto) return res.status(404).render('error', { error: 'Projeto não encontrado' });
-    res.render('pages/editar-projeto', { projeto, title: 'Editar Projeto' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
+const getSobrePage = (req, res) => {
+    res.render('pages/sobre', {
+        title: 'Sobre Mim',
+        estudante: estudante 
+    });
 };
 
-exports.editarProjeto = async (req, res) => {
-  try {
-    const { titulo, descricao, link, tecnologias, status, dataInicio } = req.body;
-    const projeto = await Projeto.findByPk(req.params.id);
-    if (!projeto) return res.status(404).render('error', { error: 'Projeto não encontrado' });
-    let fotoPath = projeto.foto;
-    if (req.file) {
-      if (projeto.foto) {
-        const caminhoAntigo = path.join(__dirname, '../../public', projeto.foto);
-        if (fs.existsSync(caminhoAntigo)) {
-          fs.unlinkSync(caminhoAntigo);
+const getProjetosPage = (req, res) => {
+    res.render('pages/projetos', {
+        title: 'Meus Projetos',
+        projects: projects
+    });
+};
+const addNovoProjeto = (req, res) => {
+    const novoProjeto = {
+        id: Date.now(),
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        link: req.body.link
+    };
+
+    projects.push(novoProjeto);
+
+    const filePath = path.join(__dirname, '..', 'data', 'projects.js');
+
+    const updatedData = `module.exports = ${JSON.stringify(projects, null, 4)};`;
+
+    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+        if (err) {
+            console.error("Erro ao salvar o arquivo:", err);
+            return res.redirect('/projetos');
         }
-      }
-      fotoPath = `/uploads/projetos/${req.file.filename}`;
-    }
-    await projeto.update({
-      titulo,
-      descricao,
-      link,
-      tecnologias,
-      status,
-      dataInicio: dataInicio || projeto.dataInicio,
-      foto: fotoPath
+
+        console.log("Arquivo projects.js atualizado com sucesso!");
+        res.redirect('/projetos');
     });
-    res.redirect('/projetos');
-  } catch (error) {
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
-    }
-    res.status(500).render('error', { error: error.message });
-  }
 };
-
-exports.deletarProjeto = async (req, res) => {
-  try {
-    const projeto = await Projeto.findByPk(req.params.id);
-    if (!projeto) return res.status(404).json({ error: 'Projeto não encontrado' });
-    if (projeto.foto) {
-      const caminhoFoto = path.join(__dirname, '../../public', projeto.foto);
-      if (fs.existsSync(caminhoFoto)) {
-        fs.unlinkSync(caminhoFoto);
-      }
-    }
-    await projeto.destroy();
-    res.redirect('/projetos');
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.contato = async (req, res) => {
-  try {
-    const informacao = await Informacao.findOne();
-    res.render('pages/contato', { informacao, title: 'Contato' });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
-};
-
-exports.dashboard = async (req, res) => {
-  try {
-    const totalDisciplinas = await Disciplina.count();
-    const projetosConcluidos = await Projeto.count({ where: { status: 'concluido' } });
-    const tecnologias = await Projeto.findAll({ attributes: ['tecnologias'] });
-    const techMap = {};
-    tecnologias.forEach(p => {
-      if (p.tecnologias) {
-        p.tecnologias.split(', ').forEach(tech => {
-          techMap[tech] = (techMap[tech] || 0) + 1;
-        });
-      }
+const getFormularioNovaDisc = (req, res) => {
+    res.render('pages/cadastroDisciplinas', {
+        title: 'Adicionar Disciplina'
     });
-    const topTechs = Object.entries(techMap)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([tech, count]) => ({ tech, count }));
+};
+const addNovaDisc = (req, res) => {
+    const novaDisciplina = req.body.nome;
+
+    disciplinas.push(novaDisciplina);
+
+    const filePath = path.join(__dirname, '..', 'data', 'disciplinas.js');
+
+    const updatedData = `module.exports = ${JSON.stringify(disciplinas, null, 4)};`;
+
+    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+        if (err) {
+            console.error("Erro ao salvar o arquivo de disciplinas:", err);
+        } else {
+            console.log("Arquivo disciplinas.js atualizado com sucesso!");
+        }
+        res.redirect('/disciplinas');
+    });
+};
+const getDisciplinasPage = (req, res) => {
+    res.render('pages/disciplinas', {
+        title: 'Minhas Disciplinas',
+        disciplinas: disciplinas 
+    });
+};
+
+const getContatoPage = (req, res) => {
+    res.render('pages/contato', {
+        title: 'Contato',
+        contato: contato
+    });
+};
+
+const getDashboardPage = (req, res) => {
+    const estatisticas = {
+        totalProjetos: projects.length,
+        totalDisciplinas: disciplinas.length,
+        tecnologias: ["Node.js", "Express", "EJS", "JavaScript", "HTML", "CSS", "React Native"]
+    };
     res.render('pages/dashboard', {
-      totalDisciplinas,
-      projetosConcluidos,
-      topTechs,
-      title: 'Dashboard'
+        title: 'Dashboard',
+        stats: estatisticas
     });
-  } catch (error) {
-    res.status(500).render('error', { error: error.message });
-  }
+};
+const getFormularioNovoProjeto = (req, res) => {
+    res.render('pages/cadastroProjeto', {
+        title: 'Adicionar Novo Projeto'
+    });
+};
+module.exports = {
+    getHomePage,
+    getSobrePage,
+    getProjetosPage,
+    getDisciplinasPage,
+    getContatoPage,
+    getDashboardPage,
+    getFormularioNovoProjeto,
+    addNovoProjeto,
+    getFormularioNovaDisc,
+    addNovaDisc
 };
