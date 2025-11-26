@@ -1,29 +1,54 @@
 <%- include('../partials/header') %>
 
-<section class="page-title">
-    <h1>Adicionar Novo Projeto</h1>
-</section>
+<div class="form-container">
+  <h1>Cadastrar Novo Projeto</h1>
 
-<section class="form-container">
-    <form action="/projetos" method="POST">
-        <div class="form-group">
-            <label for="title">Título</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="description">Descrição</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="imageUrl">URL da Imagem</label>
-            <input type="text" id="imageUrl" name="imageUrl" required>
-        </div>
-        <div class="form-group">
-            <label for="link">Link do Projeto</label>
-            <input type="text" id="link" name="link" required>
-        </div>
-        <button type="submit">Adicionar Projeto</button>
-    </form>
-</section>
+  <form action="/projetos/criar" method="POST" enctype="multipart/form-data" class="projeto-form">
+    <div class="form-group">
+      <label for="titulo">Título do Projeto *</label>
+      <input type="text" id="titulo" name="titulo" placeholder="Ex: Sistema de Gerenciamento" required maxlength="150">
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição *</label>
+      <textarea id="descricao" name="descricao" rows="5" placeholder="Descreva o projeto, objetivos e o que foi desenvolvido" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="link">Link do Projeto (GitHub)</label>
+      <input type="url" id="link" name="link" placeholder="https://github.com/seu-usuario/seu-projeto">
+    </div>
+
+    <div class="form-group">
+      <label for="tecnologias">Tecnologias Utilizadas (separadas por vírgula)</label>
+      <input type="text" id="tecnologias" name="tecnologias" placeholder="Node.js, Express, MySQL, React">
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status do Projeto *</label>
+      <select id="status" name="status" required>
+        <option value="">-- Selecione um status --</option>
+        <option value="em andamento">Em Andamento</option>
+        <option value="concluido">Concluído</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dataInicio">Data de Início</label>
+      <input type="date" id="dataInicio" name="dataInicio">
+    </div>
+
+    <div class="form-group">
+      <label for="foto">Foto do Projeto *</label>
+      <input type="file" id="foto" name="foto" accept="image/*" required>
+      <small>📁 Máximo 5MB | Formatos: JPG, PNG, GIF, WebP</small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Criar Projeto</button>
+      <a href="/projetos" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
 
 <%- include('../partials/footer') %>
