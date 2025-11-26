@@ -1,243 +1,170 @@
-const fs = require('fs');
+const { Informacao, Disciplina, Projeto } = require('../models');
 const path = require('path');
+const fs = require('fs');
 
-const projects = require('../data/projects');
-const estudante = require('../data/estudante');
-const disciplinas = require('../data/disciplinas');
-const contato = require('../data/contato');
-const { promiseHooks } = require('v8');
-
-const getHomePage = (req, res) => {
-    res.render('pages/index', {
-        title: 'Home',
-        estudante: estudante, 
-        projects: projects.slice(0, 3) 
-    });
+exports.index = async (req, res) => {
+  try {
+    const informacao = await Informacao.findOne();
+    const projetos = await Projeto.findAll({ limit: 3, order: [['createdAt', 'DESC']] });
+    res.render('pages/index', { informacao, projetos, title: 'Início' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
 };
 
-const getSobrePage = (req, res) => {
-    res.render('pages/sobre', {
-        title: 'Sobre Mim',
-        estudante: estudante 
-    });
+exports.sobre = async (req, res) => {
+  try {
+    const informacao = await Informacao.findOne();
+    res.render('pages/sobre', { informacao, title: 'Sobre Mim' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
 };
 
-const getProjetosPage = (req, res) => {
-    res.render('pages/projetos', {
-        title: 'Meus Projetos',
-        projects: projects
-    });
+exports.disciplinas = async (req, res) => {
+  try {
+    const disciplinas = await Disciplina.findAll({ order: [['semestre', 'DESC']] });
+    res.render('pages/disciplinas', { disciplinas, title: 'Minhas Disciplinas' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
 };
-const addNovoProjeto = (req, res) => {
-    const novoProjeto = {
-        id: Date.now(),
-        title: req.body.title,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        link: req.body.link
-    };
 
-    projects.push(novoProjeto);
-
-    const filePath = path.join(__dirname, '..', 'data', 'projects.js');
-
-    const updatedData = `module.exports = ${JSON.stringify(projects, null, 4)};`;
-
-    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
-        if (err) {
-            console.error("Erro ao salvar o arquivo:", err);
-            return res.redirect('/projetos');
-        }
-
-        console.log("Arquivo projects.js atualizado com sucesso!");
-        res.redirect('/projetos');
-    });
+exports.projetos = async (req, res) => {
+  try {
+    const projetos = await Projeto.findAll({ order: [['createdAt', 'DESC']] });
+    res.render('pages/projetos', { projetos, title: 'Meus Projetos' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
 };
-const excluirProjeto = (req, res) => {
-    const idParaExcluir = Number(req.params.id);
 
-    const indexParaExcluir = projects.findIndex(p => p.id === idParaExcluir);
+exports.criarProjetoForm = async (req, res) => {
+  try {
+    res.render('pages/cadastroProjeto', { title: 'Cadastrar Projeto' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
+};
 
-    if (indexParaExcluir > -1) {
-        projects.splice(indexParaExcluir, 1); 
+exports.criarProjeto = async (req, res) => {
+  try {
+    const { titulo, descricao, link, tecnologias, status, dataInicio } = req.body;
+    let fotoPath = null;
+    if (req.file) {
+      fotoPath = `/uploads/projetos/${req.file.filename}`;
     }
-
-    const filePath = path.join(__dirname, '..', 'data', 'projects.js');
-
-    const updatedData = `module.exports = ${JSON.stringify(projects, null, 4)};`;
-
-    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
-        if (err) {
-            console.error("Erro ao salvar o arquivo após exclusão:", err);
-        } else {
-            console.log("Projeto excluído e arquivo salvo com sucesso!");
-        }
-        res.redirect('/projetos');
+    await Projeto.create({
+      titulo,
+      descricao,
+      link,
+      tecnologias,
+      status,
+      dataInicio: dataInicio || new Date(),
+      foto: fotoPath
     });
-};
-const getFormularioEditarProjeto = (req, res) => {
-    const idParaEditar = Number(req.params.id);
-
-    const projeto = projects.find(p => p.id === idParaEditar);
-    if (!projeto) {
-        return res.redirect('/projetos');
+    res.redirect('/projetos');
+  } catch (error) {
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
     }
-
-    res.render('pages/editarProjeto', {
-        title: 'Editar Projeto',
-        projeto: projeto
-    });
+    res.status(500).render('error', { error: error.message });
+  }
 };
-const salvarProjetoEditado = (req, res) => {
-    const idParaEditar = Number(req.params.id);
-    const dadosAtualizados = req.body;
 
-    const indexParaEditar = projects.findIndex(p => p.id === idParaEditar);
+exports.editarProjetoForm = async (req, res) => {
+  try {
+    const projeto = await Projeto.findByPk(req.params.id);
+    if (!projeto) return res.status(404).render('error', { error: 'Projeto não encontrado' });
+    res.render('pages/editar-projeto', { projeto, title: 'Editar Projeto' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
+};
 
-    if (indexParaEditar > -1) {
-        projects[indexParaEditar].title = dadosAtualizados.title;
-        projects[indexParaEditar].description = dadosAtualizados.description;
-        projects[indexParaEditar].imageUrl = dadosAtualizados.imageUrl;
-        projects[indexParaEditar].link = dadosAtualizados.link;
+exports.editarProjeto = async (req, res) => {
+  try {
+    const { titulo, descricao, link, tecnologias, status, dataInicio } = req.body;
+    const projeto = await Projeto.findByPk(req.params.id);
+    if (!projeto) return res.status(404).render('error', { error: 'Projeto não encontrado' });
+    let fotoPath = projeto.foto;
+    if (req.file) {
+      if (projeto.foto) {
+        const caminhoAntigo = path.join(__dirname, '../../public', projeto.foto);
+        if (fs.existsSync(caminhoAntigo)) {
+          fs.unlinkSync(caminhoAntigo);
+        }
+      }
+      fotoPath = `/uploads/projetos/${req.file.filename}`;
     }
-
-    const filePath = path.join(__dirname, '..', 'data', 'projects.js');
-    const updatedData = `module.exports = ${JSON.stringify(projects, null, 4)};`;
-
-    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
-        if (err) {
-            console.error("Erro ao salvar o projeto editado:", err);
-        } else {
-            console.log("Projeto editado e salvo com sucesso!");
-        }
-        res.redirect('/projetos');
+    await projeto.update({
+      titulo,
+      descricao,
+      link,
+      tecnologias,
+      status,
+      dataInicio: dataInicio || projeto.dataInicio,
+      foto: fotoPath
     });
-};
-const getFormularioNovaDisc = (req, res) => {
-    res.render('pages/cadastroDisciplinas', {
-        title: 'Adicionar Disciplina'
-    });
-};
-const addNovaDisc = (req, res) => {
-    const novaDisciplina = req.body.nome;
-
-    disciplinas.push(novaDisciplina);
-
-    const filePath = path.join(__dirname, '..', 'data', 'disciplinas.js');
-
-    const updatedData = `module.exports = ${JSON.stringify(disciplinas, null, 4)};`;
-
-    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
-        if (err) {
-            console.error("Erro ao salvar o arquivo de disciplinas:", err);
-        } else {
-            console.log("Arquivo disciplinas.js atualizado com sucesso!");
-        }
-        res.redirect('/disciplinas');
-    });
-};
-const excluirDisciplina = (req, res) => {
-    const indexParaExcluir = Number(req.params.index);
-
-    disciplinas.splice(indexParaExcluir, 1);
-
-    const filePath = path.join(__dirname, '..', 'data', 'disciplinas.js');
-
-    const updatedData = `module.exports = ${JSON.stringify(disciplinas, null, 4)};`;
-
-    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
-        if (err) {
-            console.error("Erro ao excluir disciplina:", err);
-        } else {
-            console.log("Disciplina excluída com sucesso!");
-        }
-        res.redirect('/disciplinas');
-    });
+    res.redirect('/projetos');
+  } catch (error) {
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
+    }
+    res.status(500).render('error', { error: error.message });
+  }
 };
 
-
-
-const getFormularioEditarDisciplina = (req, res) => {
-    
-    const indexParaEditar = Number(req.params.index);
-
-    
-    const disciplina = disciplinas[indexParaEditar];
-
-    
-    res.render('pages/editarDisciplinas', {
-        title: 'Editar Disciplina',
-        disciplina: disciplina,
-        index: indexParaEditar 
-    });
-};
-const salvarDisciplinaEditada = (req, res) => {
-    
-    const indexParaEditar = Number(req.params.index);
-    const novoNome = req.body.nome;
-
-    
-    disciplinas[indexParaEditar] = novoNome;
-
-    
-    const filePath = path.join(__dirname, '..', 'data', 'disciplinas.js');
-    const updatedData = `module.exports = ${JSON.stringify(disciplinas, null, 4)};`;
-
-    fs.writeFile(filePath, updatedData, 'utf8', (err) => {
-        if (err) {
-            console.error("Erro ao salvar a disciplina editada:", err);
-        } else {
-            console.log("Disciplina editada e salva com sucesso!");
-        }
-        res.redirect('/disciplinas');
-    });
+exports.deletarProjeto = async (req, res) => {
+  try {
+    const projeto = await Projeto.findByPk(req.params.id);
+    if (!projeto) return res.status(404).json({ error: 'Projeto não encontrado' });
+    if (projeto.foto) {
+      const caminhoFoto = path.join(__dirname, '../../public', projeto.foto);
+      if (fs.existsSync(caminhoFoto)) {
+        fs.unlinkSync(caminhoFoto);
+      }
+    }
+    await projeto.destroy();
+    res.redirect('/projetos');
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-const getDisciplinasPage = (req, res) => {
-    res.render('pages/disciplinas', {
-        title: 'Minhas Disciplinas',
-        disciplinas: disciplinas 
-    });
+exports.contato = async (req, res) => {
+  try {
+    const informacao = await Informacao.findOne();
+    res.render('pages/contato', { informacao, title: 'Contato' });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
 };
 
-const getContatoPage = (req, res) => {
-    res.render('pages/contato', {
-        title: 'Contato',
-        contato: contato
+exports.dashboard = async (req, res) => {
+  try {
+    const totalDisciplinas = await Disciplina.count();
+    const projetosConcluidos = await Projeto.count({ where: { status: 'concluido' } });
+    const tecnologias = await Projeto.findAll({ attributes: ['tecnologias'] });
+    const techMap = {};
+    tecnologias.forEach(p => {
+      if (p.tecnologias) {
+        p.tecnologias.split(', ').forEach(tech => {
+          techMap[tech] = (techMap[tech] || 0) + 1;
+        });
+      }
     });
-};
-
-const getDashboardPage = (req, res) => {
-    const estatisticas = {
-        totalProjetos: projects.length,
-        totalDisciplinas: disciplinas.length,
-        tecnologias: ["Node.js", "Express", "EJS", "JavaScript", "HTML", "CSS", "React Native"]
-    };
+    const topTechs = Object.entries(techMap)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([tech, count]) => ({ tech, count }));
     res.render('pages/dashboard', {
-        title: 'Dashboard',
-        stats: estatisticas
+      totalDisciplinas,
+      projetosConcluidos,
+      topTechs,
+      title: 'Dashboard'
     });
-};
-const getFormularioNovoProjeto = (req, res) => {
-    res.render('pages/cadastroProjeto', {
-        title: 'Adicionar Novo Projeto'
-    });
-};
-module.exports = {
-    getHomePage,
-    getSobrePage,
-    getProjetosPage,
-    getDisciplinasPage,
-    getContatoPage,
-    getDashboardPage,
-    getFormularioNovoProjeto,
-    addNovoProjeto,
-    getFormularioNovaDisc,
-    addNovaDisc,
-    excluirProjeto,
-    excluirDisciplina,
-    getFormularioEditarProjeto,
-    salvarProjetoEditado,
-    getFormularioEditarDisciplina,
-    salvarDisciplinaEditada
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
 };
